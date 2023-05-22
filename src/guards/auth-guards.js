@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import GeneralContext from '@components/context/GeneralContext';
 //aqui un analisis porque estas metiendo firebase
 //import { user } from 'src/contexts/auth-context';
 
@@ -8,10 +9,20 @@ export const AuthGuard = (props) => {
   const { children } = props;
   const router = useRouter();
 
+  const { state}= useContext(GeneralContext)
 //aqui un analisis porque estas metiendo firebase
 //const { isAuthenticated } = useAuthContext();
 
-const isAuthenticated=true
+let isAuthenticated=null
+
+if(state.thereerror){
+
+  isAuthenticated=false
+
+}else{
+  isAuthenticated=true
+}
+
 
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);

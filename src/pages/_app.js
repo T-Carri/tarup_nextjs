@@ -4,6 +4,7 @@ import '@components/styles/globals.css'
 import { AuthConsumer, AuthProvider } from '@components/context/AuthContext';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { GeneralProvider, GeneralConsumer } from '@components/context/GeneralContext';
 
 export default function App({ Component, pageProps }) {
  
@@ -12,18 +13,22 @@ export default function App({ Component, pageProps }) {
  
  
   return(
-    <AuthProvider>
-<CssBaseline />
-<AuthConsumer>
+  /*   <GeneralProvider> 
+   <GeneralConsumer> */
+
+  <AuthProvider>
+  <CssBaseline />
+  <AuthConsumer>
 
    {
      getLayout(<Component {...pageProps} />)
     } 
 
 
-</AuthConsumer>
-
+    </AuthConsumer>
     </AuthProvider>
+/*     </GeneralConsumer>
+    </GeneralProvider> */
   ) 
               
 }

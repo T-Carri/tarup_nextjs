@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,9 +12,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 //import { UserAuth } from '@components/context/AuthContext';
 import { useRouter } from 'next/router'
 import { useAuth } from '@components/hooks/use-auth';
+import GeneralContext from '@components/context/GeneralContext';
+import { TYPES } from '@components/redux/Types';
 export const Login = () => {
   const router = useRouter()
-const auth = useAuth()
+  const auth = useAuth()
+
+  const {state, dispatch}=useContext(GeneralContext)
+
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   
@@ -54,15 +59,28 @@ const handleSubmit = async (e) => {
   } catch (e)  {
     if(e.code === 'auth/invalid-email'){
       setError('El correo electrónico es inválido')
-    /*   auth.dispatch({
-        type:ERROR
-      }) */
+      dispatch({
+        type:TYPES.ERROR_ERROR, payload: e.code 
+      }) 
+      console.log(state)
     }else if(e.code === 'auth/user-not-found'){
       setError('El usuario no existe')
+      dispatch({
+        type:TYPES.ERROR_ERROR, payload: e.code 
+      }) 
+      console.log(state)
     }else if(e.code === 'auth/wrong-password'){
       setError('La contraseña es incorrecta')
+      dispatch({
+        type:TYPES.ERROR_ERROR, payload: e.code 
+      }) 
+      console.log(state)
     }else{
       setError(e.message)
+      dispatch({
+        type:TYPES.ERROR_ERROR, payload: e.message 
+      }) 
+      console.log(state)
     }
   }
 }; 
@@ -107,7 +125,7 @@ const handleSubmit = async (e) => {
             Iniciar sesion
           </Typography>
           {error}
-          <Box component="form"  /* onSubmit={handleSubmit} */   noValidate sx={{ mt: 1 }}>
+          <Box component="form"   onSubmit={handleSubmit}  noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required

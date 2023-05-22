@@ -7,31 +7,12 @@ import {
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import PropTypes from 'prop-types';
+import { GlobalState } from '@components/redux/GlobalState';
 
 const AuthContext = createContext();
 export default AuthContext
 
 
-
-initialState = {
-  error: null
-}
-
-
-const handlers = {
-
-[HANDLERS.ERROR]: (state, action)=> {
-  const thereError= action.payload
-  return{...state}
-}
-
-
-}
-
-
-const reducer = (state, action) => (
-  handlers[action.type] ? handlers[action.type](state, action) : state
-);
 
 
 
@@ -42,9 +23,16 @@ export const UserAuth = () => {
 
 
 export const AuthProvider = ({ children }) => {
+
+
+
+
+
+
+
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [state, dispatch] = useReducer(reducer, initialState);
+
   // const dispatch=useDispatch() ;
   //const firestore= getFirestore(app)
   
@@ -79,16 +67,7 @@ export const AuthProvider = ({ children }) => {
 
    const login  = (email, password) =>  {
     
-      return signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{
-        const user = userCredential.user;
-        console.log(user)
-      }).catch((error)=>{
-        const errorCode= error.code;
-        console.log(errorCode)
-        const errorMessage=error.message;
-        console.log(errorMessage)
-      })  
-  
+      return signInWithEmailAndPassword(auth, email, password)
     
     
    }
@@ -102,9 +81,9 @@ export const AuthProvider = ({ children }) => {
 
   console.log(user)
   //console.log('Auth:', auth)
-  console.log(state.error, state.thereError)
+ 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, state, dispatch }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
