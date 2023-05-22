@@ -16,7 +16,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Logout } from '@mui/icons-material';
-import { UserAuth } from '@components/context/AuthContext';
+//import { UserAuth } from '@components/context/AuthContext';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import cas from '../../assets/cas.png'
 import Image from 'next/image';
@@ -81,7 +81,7 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const { user, logout} = UserAuth() 
+  //const { user, logout} = UserAuth() 
 
 
 
@@ -120,7 +120,7 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={()=>logout()}>Salir</MenuItem>
+      <MenuItem /* onClick={()=>logout()} */>Salir</MenuItem>
     </Menu>
   );
 

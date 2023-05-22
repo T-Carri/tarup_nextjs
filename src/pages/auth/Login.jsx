@@ -9,21 +9,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { UserAuth } from '@components/context/AuthContext';
+//import { UserAuth } from '@components/context/AuthContext';
 import { useRouter } from 'next/router'
-
+import { useAuth } from '@components/hooks/use-auth';
 export const Login = () => {
   const router = useRouter()
-
+const auth = useAuth()
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
   
 
-  const { user, login, logout} = UserAuth() 
+  //const { user, login, logout} = UserAuth() 
 
   const emailRef = useRef(null)
   const passwordRef= useRef(null)
-
+/* 
    useEffect(()=>{
     let authToken = sessionStorage.getItem('Auth Token')
     if(user){
@@ -32,7 +32,7 @@ export const Login = () => {
     if(!user){
         router.replace('/Welcome')
     }
-},[])
+},[]) */
  
 //building my own handle login 
 
@@ -47,13 +47,16 @@ const handleSubmit = async (e) => {
   }
   setEmailError('');
   try {
-      await login(emailRef.current.value, passwordRef.current.value).then((response)=>{
-        router.replace('/Dashboard')
-          sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
+      await auth.login(emailRef.current.value, passwordRef.current.value).then((response)=>{
+        router.push('/')
+          //sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
       });
   } catch (e)  {
     if(e.code === 'auth/invalid-email'){
       setError('El correo electrónico es inválido')
+    /*   auth.dispatch({
+        type:ERROR
+      }) */
     }else if(e.code === 'auth/user-not-found'){
       setError('El usuario no existe')
     }else if(e.code === 'auth/wrong-password'){
@@ -63,9 +66,9 @@ const handleSubmit = async (e) => {
     }
   }
 }; 
+ 
 
-
-console.log(user)
+//console.log(user)
 
 
 //handle login by example sairajchouhan 
@@ -104,7 +107,7 @@ console.log(user)
             Iniciar sesion
           </Typography>
           {error}
-          <Box component="form"  onSubmit={handleSubmit}   noValidate sx={{ mt: 1 }}>
+          <Box component="form"  /* onSubmit={handleSubmit} */   noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -140,11 +143,7 @@ console.log(user)
             >
               Iniciar sesion
             </Button>
-            <button
-             onClick={()=>logout()}
-            >
-              cerrar sesion
-            </button>
+         
           
           </Box>
         </Box>

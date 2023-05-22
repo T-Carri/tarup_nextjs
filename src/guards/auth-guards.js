@@ -11,7 +11,7 @@ export const AuthGuard = (props) => {
 //aqui un analisis porque estas metiendo firebase
 //const { isAuthenticated } = useAuthContext();
 
-const isAuthenticated=false
+const isAuthenticated=true
 
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);
@@ -21,7 +21,7 @@ const isAuthenticated=false
   // triggered and will automatically redirect to sign-in page.
 
   useEffect(
-    () => {
+    () => { 
       if (!router.isReady) {
         return;
       }
@@ -38,7 +38,7 @@ const isAuthenticated=false
         console.log('Not authenticated, redirecting');
         router
           .replace({
-            pathname: '/auth/login',
+            pathname: '/auth/Acceso',
             query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
           })
           .catch(console.error);

@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@components/styles/Home.module.css'
-import Welcome from './Welcome'
+import { Box, Container } from '@mui/material'
+import { Layout as DashboardLayout } from '@components/layouts/dashboard/layout'
+ 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
-  return (
+const Home = () =>  (
     <>
       <Head>
         <title>Tarup</title>
@@ -17,19 +18,48 @@ export default function Home() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet"></link>
       </Head>
-      <main /* className={styles.main} */>
-        <div /* className={styles.description} */>
-        <Welcome/>
-        </div>
-      </main>
+      <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8
+        
+      }} /* style={{
+        backgroundColor:'red'
+      }} */
+    > 
+
+<Container maxWidth="xl" /* style={{
+        backgroundColor:'green'
+      }} */>
+
+</Container> 
+
+    </Box>
     </>
   )
-}
 
 
+  Home.getLayout = (page)=> (
+    <DashboardLayout>
+    {page}
+  </DashboardLayout>
+  )
+  
+  export default Home;
 
 
+//componenete replazado 5212023-125
+/* 
+<main  className={styles.main} >
+<div  className={styles.description} >
 
+<h3>YOU GET IT</h3> */
+
+{/* <Welcome/> */}
+/* </div>
+</main>
+ */
 //Recuperacion
 
 /* import Head from 'next/head'

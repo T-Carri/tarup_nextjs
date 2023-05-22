@@ -16,11 +16,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Signup } from './Acceso/Signup';
-import { Login } from './Acceso/Login';
+import { Signup } from './Signup';
+import { Login } from './Login';
 
-
-export const Acceso = () => {
+import { Layout as AuthLayout } from '@components/layouts/auth/layout';
+ const Page = () => {
 
 const [access, setAccess] = useState(false )
 
@@ -89,3 +89,12 @@ const [access, setAccess] = useState(false )
  </Card>
   )
 }
+
+Page.getLayout =( page ) => (
+
+  <AuthLayout>
+  {page}
+</AuthLayout>
+)
+
+export default Page;
