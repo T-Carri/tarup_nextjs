@@ -20,6 +20,10 @@ import { Logout } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import cas from '../../assets/cas.png'
 import Image from 'next/image';
+import { useAuth } from '@components/hooks/use-auth';
+import { useRouter } from 'next/router';
+
+
 const darkTheme = createTheme({
   palette: {
     
@@ -83,6 +87,8 @@ export default function Navbar() {
 
   //const { user, logout} = UserAuth() 
 
+  const router = useRouter()
+const auth=useAuth()
 
 
   const handleProfileMenuOpen = (event) => {
@@ -120,7 +126,14 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem /* onClick={()=>logout()} */>Salir</MenuItem>
+      <MenuItem  onClick={()=>{auth.logout()
+        router
+        .replace({
+          pathname: '/auth/Acceso',
+          query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
+        })
+        .catch(console.error);
+      }} >Salir</MenuItem>
     </Menu>
   );
 

@@ -8,6 +8,19 @@ export const GlobalState= (state, action)=>{
                 ...state, 
                 thereerror: action.payload
             }
+        
+         case TYPES.LOGIN:
+            return{
+                ...state,
+                user: action.payload,
+                isAuthenticated: true
+            }
+
+         case TYPES.LOGOUT:
+            return{
+                ...state, 
+                isAuthenticated: false
+            }   
 
             default: 
             return state; 

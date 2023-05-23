@@ -13,22 +13,22 @@ export default function App({ Component, pageProps }) {
  
  
   return(
-  /*   <GeneralProvider> 
-   <GeneralConsumer> */
 
+   <GeneralProvider> 
+   {/* <GeneralConsumer> */}
   <AuthProvider>
   <CssBaseline />
-  <AuthConsumer>
+  {/* <AuthConsumer> */}
 
    {
      getLayout(<Component {...pageProps} />)
     } 
 
 
-    </AuthConsumer>
+    {/* </AuthConsumer> */}
     </AuthProvider>
-/*     </GeneralConsumer>
-    </GeneralProvider> */
+   {/* /GeneralConsumer> */}
+       </GeneralProvider> 
   ) 
               
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useReducer } from 'react'
+import { createContext, useContext, useEffect, useState, useReducer, useRef } from 'react'
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -7,7 +7,8 @@ import {
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import PropTypes from 'prop-types';
-import { GlobalState } from '@components/redux/GlobalState';
+import GeneralContext from '@components/context/GeneralContext';
+import { TYPES } from '@components/redux/Types';
 
 const AuthContext = createContext();
 export default AuthContext
@@ -23,16 +24,17 @@ export const UserAuth = () => {
 
 
 export const AuthProvider = ({ children }) => {
-
-
-
-
-
-
-
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
-
+  
+  
+  const { state, dispatch}= useContext(GeneralContext)
+  
+  const userRef = useRef(null)
+  const keyRef = useRef(null)
+  
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  
+  let isAuthenticated = false;
   // const dispatch=useDispatch() ;
   //const firestore= getFirestore(app)
   
@@ -45,8 +47,22 @@ export const AuthProvider = ({ children }) => {
             email: user.email,
             displayName: user.displayName,
           })
+userRef.current=user
+
+window.sessionStorage.setItem('authenticated', 'true');
+
+dispatch({
+  type: TYPES.LOGIN , payload: user
+})
+
+
+
         } else {
           setUser(null)
+          window.sessionStorage.setItem('authenticated', 'false');
+          dispatch({
+            type: TYPES.LOGOUT
+          })
         }
         setLoading(false)
       })
@@ -79,11 +95,32 @@ export const AuthProvider = ({ children }) => {
       
   }
 
+
+/*   const goahead =async ()=>{
+  try {
+    keyRef.current= sessionStorage.getItem('authenticated') === 'true';
+    
+    console.log(isAuthenticated)
+
+  } catch (error) {
+    console.log('goahead:', error)
+  }  
+  
+  
+  }
+
+  useEffect(()=>{
+    goahead()
+  }, []) */
+
   console.log(user)
-  //console.log('Auth:', auth)
+
+console.log('TEST:', keyRef.current)
+
+//console.log(isAuthenticated)
  
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, keyRef }}>
       {children}
     </AuthContext.Provider>
   );

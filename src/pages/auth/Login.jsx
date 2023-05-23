@@ -55,7 +55,12 @@ const handleSubmit = async (e) => {
       await auth.login(emailRef.current.value, passwordRef.current.value).then((response)=>{
         router.push('/')
           //sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
+          /* setError(response) */
       });
+      dispatch({
+        type:TYPES.ERROR_ERROR, payload: '' 
+      }) 
+
   } catch (e)  {
     if(e.code === 'auth/invalid-email'){
       setError('El correo electrónico es inválido')
@@ -162,7 +167,7 @@ const handleSubmit = async (e) => {
               Iniciar sesion
             </Button>
          
-          
+          <button onClick={()=>auth.logout()}> salir</button>
           </Box>
         </Box>
   )

@@ -12,8 +12,9 @@ export default GeneralContext
 export const GeneralProvider = ({children})=>{
 
   const  initialState={
-      thereerror:null
-    
+      thereerror:'',
+      user: '',
+      isAuthenticated: false
     }
 const [state, dispatch] = useReducer(GlobalState, initialState);
 
@@ -31,10 +32,10 @@ return(
 
 }
 
-
+/* 
 GeneralProvider.propTypes = {
   children: PropTypes.node
-};
+}; */
 export const GeneralConsumer = GeneralContext.Consumer;
 
 
